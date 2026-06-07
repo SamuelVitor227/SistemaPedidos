@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/sgame/OneDrive/�rea de Trabalho/**)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\sgame\\\\OneDrive\\\\Área de Trabalho\\\\SistemaPedidos\" -Recurse -File | Where-Object { $_.Name -notmatch \"\\(bin|obj|\\\\.git\\)\" } | Select-Object FullName | Sort-Object)",
+      "Bash(npx create-expo-app@latest mobile --template blank-typescript)",
+      "Bash(npm install *)",
+      "Bash(cd \"c:\\\\Users\\\\sgame\\\\OneDrive\\\\Área de Trabalho\\\\SistemaPedidos\\\\mobile\" && mkdir -p src/navigation src/screens/Dashboard src/screens/Pedidos src/screens/Produtos src/screens/Clientes src/components src/services src/types src/hooks 2>&1)",
+      "Bash(findstr \"nativewind\\\\|tailwind\\\\|expo\\\\\"\")",
+      "Bash(firebase --version)",
+      "Bash(firebase projects:list)",
+      "Bash(firebase apps:list --project sistemas-de-pedido)",
+      "Bash(firebase apps:create WEB \"SistemaPedidos\" --project sistemas-de-pedido)",
+      "Bash(firebase apps:sdkconfig WEB 1:956755896668:web:f1648cfe7055a266017999 --project sistemas-de-pedido)",
+      "Bash(firebase firestore:databases:create --location=southamerica-east1 --project sistemas-de-pedido)",
+      "Bash(firebase firestore:databases:create \"\\(default\\)\" --location=southamerica-east1 --project sistemas-de-pedido)",
+      "Bash(firebase firestore:databases:list --project sistemas-de-pedido)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\sgame\\\\OneDrive\\\\Área de Trabalho\\\\SistemaPedidos\\\\mobile\\\\src\" -Recurse -File)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)",
+      "Bash(node -e \"const d=require\\('/dev/stdin'\\);console.log\\(d.dependencies['react-native-gesture-handler']\\)\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\);console.log\\(p.dependencies['react-native-gesture-handler']\\)\")",
+      "Bash(firebase auth:export --format=json --project sistemas-de-pedido)",
+      "Bash(firebase auth:export users.json --format=json --project sistemas-de-pedido)",
+      "Bash(del users.json)",
+      "Bash(\"%LOCALAPPDATA%\\\\Android\\\\Sdk\\\\emulator\\\\emulator.exe\" -list-avds)",
+      "PowerShell(& \"$env:LOCALAPPDATA\\\\Android\\\\Sdk\\\\emulator\\\\emulator.exe\" -list-avds 2>&1)",
+      "PowerShell(Start-Process \"$env:LOCALAPPDATA\\\\Android\\\\Sdk\\\\emulator\\\\emulator.exe\" -ArgumentList \"-avd Pixel_10_Pro_XL\" -WindowStyle Normal)",
+      "Bash(npx expo *)",
+      "Bash(node -e \"const nw = require\\('./node_modules/nativewind/metro'\\); console.log\\(Object.keys\\(nw\\)\\)\")",
+      "Bash(node -e \"const nw = require\\('nativewind/metro'\\); console.log\\(Object.keys\\(nw\\)\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/nativewind/package.json'\\); console.log\\('version:', p.version\\); console.log\\('peerDeps:', JSON.stringify\\(p.peerDependencies, null, 2\\)\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/react-native-css-interop/package.json'\\); console.log\\('css-interop version:', p.version\\); console.log\\('peerDeps:', JSON.stringify\\(p.peerDependencies, null, 2\\)\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/nativewind/node_modules/react-native-css-interop/package.json'\\); console.log\\('css-interop version:', p.version\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/metro/package.json'\\); console.log\\('metro version:', p.version\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/react-native-reanimated/package.json'\\); console.log\\('reanimated version:', p.version\\)\")"
+    ]
+  }
+}

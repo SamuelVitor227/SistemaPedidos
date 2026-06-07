@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\('nativewind/babel'\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/react-native-svg/package.json'\\); console.log\\('react-native-svg version:', p.version\\)\")",
+      "Bash(node -e \"const p = require\\('./node_modules/react-native-svg/package.json'\\); console.log\\('react-native-svg:', p.version\\)\")"
+    ]
+  }
+}
