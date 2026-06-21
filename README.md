@@ -1,86 +1,110 @@
 # SistemaPedidos
 
-Sistema de gerenciamento de pedidos com backend em .NET e aplicativo mobile em React Native.
+Aplicativo móvel de **e-commerce e delivery** em React Native (Expo), integrado ao
+Firebase. O repositório contém duas frentes:
 
-## Visão Geral
-
-Aplicação completa para gerenciar pedidos, clientes e produtos. O app mobile se conecta ao Firebase (Firestore) para persistência de dados em tempo real e autenticação de usuários.
+- **`mobile/`** — o aplicativo principal. Arquitetura **BaaS**: o app conversa
+  **direto com o Firebase Cloud Firestore** (catálogo, pedidos e perfis) e usa o
+  Firebase Authentication para login. É o fluxo ativo do projeto.
+- **`backend/`** — uma **API REST opcional** em Node.js + Express com Firebase Admin
+  SDK. Foi construída como camada de retaguarda/administração, mas **o app mobile
+  hoje não depende dela** — ele acessa o Firestore diretamente. Mantida no repositório
+  como alternativa de back-office.
 
 ## Tecnologias
 
-**Backend**
-- .NET 10 / ASP.NET Core
-- Arquitetura em camadas (Domain, Application, Infrastructure, API)
-
-**Mobile**
-- React Native 0.85 + Expo 56
-- TypeScript
-- Firebase (Firestore + Authentication)
+**Mobile (app principal)**
+- React Native 0.85 + Expo 56 + TypeScript
+- Firebase Authentication (e-mail/senha)
+- Firebase Cloud Firestore (acesso direto — BaaS)
+- AsyncStorage + Context API (carrinho)
 - NativeWind (Tailwind CSS para React Native)
-- React Navigation (Stack + Bottom Tabs)
+- React Navigation (Bottom Tabs + Stacks)
 
-## Funcionalidades
+**Backend (opcional)**
+- Node.js + Express
+- Firebase Admin SDK (Firestore)
+
+## Funcionalidades do app
 
 - Autenticação com e-mail e senha (Firebase Auth)
-- Cadastro e listagem de **clientes**
-- Cadastro e listagem de **produtos** com controle de estoque
-- Criação e gerenciamento de **pedidos** com status: `Pendente`, `Pago`, `Enviado`, `Cancelado`
-- Carrinho de compras com persistência local (AsyncStorage)
-- Busca e filtros em todas as listas
-- Sincronização em tempo real via Firestore
+- Catálogo de **produtos** por categoria, lido do Firestore
+- **Carrinho** de compras com persistência local (AsyncStorage)
+- **Checkout** com endereço e forma de pagamento, gravando o pedido no Firestore
+- **Histórico de pedidos** e **rastreamento de status** em tempo real (snapshot listeners)
+- Busca de produtos e perfil do usuário
 
 ## Estrutura do Projeto
 
 ```
 SistemaPedidos/
-├── SistemaPedidos.API/            # API ASP.NET Core
-├── SistemaPedidos.Application/    # Casos de uso
-├── SistemaPedidos.Domain/         # Entidades e enums
-├── SistemaPedidos.Infrastructure/ # Acesso a dados
-└── mobile/                        # App React Native/Expo
-    └── src/
-        ├── context/               # AuthContext (Firebase)
-        ├── hooks/                 # useCart
-        ├── navigation/            # Navegação por stacks e tabs
-        ├── screens/               # Telas (Auth, Dashboard, Pedidos, Produtos, Clientes)
-        ├── services/              # Configuração Firebase
-        └── types/                 # Tipagens TypeScript
+├── mobile/                    # App React Native/Expo (fluxo ativo)
+│   └── src/
+│       ├── context/           # AuthContext (Firebase Auth), CartContext (AsyncStorage)
+│       ├── navigation/        # AppNavigator (tabs) + HomeStack, PedidosStack, AuthStack
+│       ├── screens/           # Auth, Home, Buscar, Pedidos, Perfil
+│       ├── services/          # firebase.ts (config) e firestore.ts (acesso a dados)
+│       ├── theme/             # paleta dark/verde-lima
+│       ├── types/             # tipagens do domínio
+│       └── utils/             # formatação (moeda BRL, datas)
+│   └── README.md              # documentação detalhada do app + setup do Firebase
+└── backend/                   # API Node.js + Express (opcional / back-office)
+    ├── src/
+    │   ├── config/firebase.js
+    │   ├── routes/            # clientes.js, produtos.js, pedidos.js
+    │   ├── app.js
+    │   └── server.js
+    └── package.json
 ```
 
-## Como Rodar o Mobile
+## Como rodar o app mobile (principal)
 
-**Pré-requisitos:** Node.js, Expo CLI
+**Pré-requisitos:** Node.js, Expo Go (ou emulador)
 
 ```bash
 cd mobile
 npm install
-npx expo start
+npx expo start -c
 ```
 
-Escaneie o QR code com o app **Expo Go** no celular, ou rode em emulador.
+Antes do primeiro uso, configure o projeto Firebase `sistemas-de-pedido`:
+habilite **Authentication → E-mail/senha** e crie o **Firestore** com regras para
+usuários autenticados. O passo a passo completo (e as regras prontas) está em
+[`mobile/README.md`](./mobile/README.md). O catálogo é populado automaticamente na
+primeira abertura.
 
-## Como Rodar o Backend
+## Como rodar o backend (opcional)
 
-**Pré-requisitos:** .NET 10 SDK
+O backend não é necessário para usar o app, mas pode servir como API de retaguarda.
+
+**Pré-requisitos:** Node.js
 
 ```bash
-cd SistemaPedidos.API
-dotnet run
+cd backend
+npm install
+npm run dev
 ```
 
-API disponível em `https://localhost:7267` (Swagger em `/swagger`).
+API disponível em `http://localhost:3000`.
 
-## Variáveis de Ambiente
+### Endpoints da API (backend opcional)
 
-O app mobile utiliza o Firebase. Configure suas credenciais em `mobile/src/services/firebase.ts`:
+| Método | Rota | Descrição |
+|---|---|---|
+| GET / POST | `/clientes` | Listar / Criar cliente |
+| GET / PUT / DELETE | `/clientes/:id` | Buscar / Editar / Excluir cliente |
+| GET / POST | `/produtos` | Listar / Criar produto |
+| GET / PUT / DELETE | `/produtos/:id` | Buscar / Editar / Excluir produto |
+| GET / POST | `/pedidos` | Listar / Criar pedido |
+| GET / DELETE | `/pedidos/:id` | Buscar / Excluir pedido |
+| GET | `/pedidos/cliente/:clienteId` | Pedidos por cliente |
+| PATCH | `/pedidos/:id/status` | Atualizar status do pedido |
 
-```ts
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
-};
+### Variáveis de ambiente do backend
+
+Crie um arquivo `.env` dentro de `backend/`:
+
+```env
+PORT=3000
+FIREBASE_CREDENTIAL_PATH=./firebase-credentials.json
 ```

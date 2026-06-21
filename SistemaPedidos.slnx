@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="SistemaPedidos.API/SistemaPedidos.API.csproj" />
-  <Project Path="SistemaPedidos.Application/SistemaPedidos.Application.csproj" />
-  <Project Path="SistemaPedidos.Domain/SistemaPedidos.Domain.csproj" />
-  <Project Path="SistemaPedidos.Infrastructure/SistemaPedidos.Infrastructure.csproj" />
-</Solution>

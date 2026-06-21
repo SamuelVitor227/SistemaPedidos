@@ -31,6 +31,8 @@ mobile/ios/
 *.pem
 google-services.json
 GoogleService-Info.plist
+firebase-credentials.json
+backend/node_modules/
 
 # ============================================================
 # Sistema operacional

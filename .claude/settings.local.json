@@ -3,7 +3,16 @@
     "allow": [
       "Bash(node -e \"require\\('nativewind/babel'\\)\")",
       "Bash(node -e \"const p = require\\('./node_modules/react-native-svg/package.json'\\); console.log\\('react-native-svg version:', p.version\\)\")",
-      "Bash(node -e \"const p = require\\('./node_modules/react-native-svg/package.json'\\); console.log\\('react-native-svg:', p.version\\)\")"
+      "Bash(node -e \"const p = require\\('./node_modules/react-native-svg/package.json'\\); console.log\\('react-native-svg:', p.version\\)\")",
+      "Bash(dotnet build *)",
+      "Bash(node src/server.js)",
+      "Bash(node -e \"require\\('dotenv'\\).config\\(\\); const app = require\\('./src/app'\\); const server = app.listen\\(3000, \\(\\) => { console.log\\('ok'\\); server.close\\(\\); }\\);\")",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/clientes)",
+      "Bash(curl -s http://localhost:3000/produtos)",
+      "Bash(Remove-Item -Recurse -Force \"SistemaPedidos.API\", \"SistemaPedidos.Application\", \"SistemaPedidos.Domain\", \"SistemaPedidos.Infrastructure\", \"SistemaPedidos.slnx\")",
+      "PowerShell(& \"$env:LOCALAPPDATA\\\\Android\\\\Sdk\\\\emulator\\\\emulator.exe\" -list-avds 2>&1)",
+      "PowerShell(Start-Process \"$env:LOCALAPPDATA\\\\Android\\\\Sdk\\\\emulator\\\\emulator.exe\" -ArgumentList \"-avd Pixel_10_Pro_XL\" -WindowStyle Normal)"
     ]
   }
 }
